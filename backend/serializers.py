@@ -1,5 +1,5 @@
-from models import Task
 from rest_framework import serializers
+from backend.models import Task
 
 class TaskSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
