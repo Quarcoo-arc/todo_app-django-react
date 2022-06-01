@@ -1,28 +1,58 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ReactComponent as PlusIcon } from "../assets/svgs/PlusIcon.svg";
 
 const Form = () => {
+  const [newTask, setNewTask] = useState("");
+
+  const [taskList, setTaskList] = useState([]);
+
+  useEffect(() => {
+    const fetchTasks = async () => {
+      const tasks = await fetch("http://127.0.0.1:8000/tasks/", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await tasks.json();
+      setTaskList(data);
+    };
+    fetchTasks();
+  }, []);
+
+  const changeTaskText = (event) => setNewTask(event.target.value);
+
+  const addNewTask = (event) => {
+    event.preventDefault();
+    setTaskList((prev) => [...prev, newTask]);
+    console.log(newTask);
+    setNewTask("");
+  };
+
   return (
-    <form action="">
+    <div>
+      {taskList.map((item, index) => (
+        <div key={index} className="task">
+          <input type="checkbox" name={"task" + index} id={"task" + index} />
+          <label htmlFor={"task" + index}>{item.item}</label>
+        </div>
+      ))}
       <div className="task">
-        <input type="checkbox" name="task1" id="task1" />
-        <label htmlFor="task1">Task One</label>
+        <form action="" onSubmit={addNewTask}>
+          <input
+            type="text"
+            name="newTask"
+            id="newTask"
+            placeholder="New Task"
+            required
+            value={newTask}
+            onChange={changeTaskText}
+          />
+          <button type="submit" className="submitBtn">
+            <PlusIcon width="2rem" className="plusIcon" />
+          </button>
+        </form>
       </div>
-      <div className="task">
-        <input type="checkbox" name="task2" id="task2" />
-        <label htmlFor="task2">Task Two</label>
-      </div>
-      <div className="task">
-        <input type="checkbox" name="task3" id="task3" />
-        <label htmlFor="task3">Task Three</label>
-      </div>
-      <div className="task">
-        <input type="text" name="newTask" id="newTask" placeholder="New Task" />
-        <button type="submit" className="submitBtn">
-          <PlusIcon width="2rem" className="plusIcon" />
-        </button>
-      </div>
-    </form>
+    </div>
   );
 };
 
