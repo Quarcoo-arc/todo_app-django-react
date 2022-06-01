@@ -21,10 +21,25 @@ const Form = () => {
 
   const changeTaskText = (event) => setNewTask(event.target.value);
 
-  const addNewTask = (event) => {
+  const addNewTask = async (event) => {
     event.preventDefault();
-    setTaskList((prev) => [...prev, newTask]);
-    console.log(newTask);
+    if (!newTask) {
+      return alert("Please enter a task!");
+    }
+    try {
+      fetch("http://127.0.0.1:8000/tasks/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          item: newTask,
+        }),
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+    setTaskList((prev) => [...prev, { item: newTask }]);
     setNewTask("");
   };
 
