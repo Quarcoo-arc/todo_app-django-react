@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ReactComponent as PlusIcon } from "../assets/svgs/PlusIcon.svg";
-import { ReactComponent as EditIcon } from "../assets/svgs/EditIcon.svg";
-import { ReactComponent as DeleteIcon } from "../assets/svgs/DeleteIcon.svg";
+import { ReactComponent as CheckMarkIcon } from "../assets/svgs/CheckMarkIcon.svg";
+import TaskItem from "./TaskItem";
 
 const Form = () => {
   const [newTask, setNewTask] = useState("");
@@ -88,7 +88,7 @@ const Form = () => {
     }
   };
 
-  const editTask = async (item) => {
+  const editTask = (item) => {
     setNewTask(item.item);
     setEditItemUrl(item.url);
   };
@@ -96,24 +96,13 @@ const Form = () => {
   return (
     <div>
       {taskList.map((item, index) => (
-        <div key={index} className="task">
-          <input type="checkbox" name={"task" + index} id={"task" + index} />
-          <label htmlFor={"task" + index}>{item.item}</label>
-          <div className="icons">
-            <EditIcon
-              width="1.5rem"
-              className="icon"
-              fill="#e1e104"
-              onClick={editTask.bind(null, item)}
-            />
-            <DeleteIcon
-              width="1.5rem"
-              className="icon"
-              fill="#d20707"
-              onClick={deleteTask.bind(null, item.url)}
-            />
-          </div>
-        </div>
+        <TaskItem
+          key={index}
+          index={index}
+          item={item}
+          editTask={editTask.bind(null, item)}
+          deleteTask={deleteTask.bind(null, item.url)}
+        />
       ))}
       <div className="task">
         <form action="" onSubmit={addNewTask}>
@@ -127,7 +116,11 @@ const Form = () => {
             onChange={changeTaskText}
           />
           <button type="submit" className="submitBtn">
-            <PlusIcon width="2rem" className="plusIcon" />
+            {editItemUrl ? (
+              <CheckMarkIcon width="2rem" className="plusIcon" fill="green" />
+            ) : (
+              <PlusIcon width="2rem" className="plusIcon" />
+            )}
           </button>
         </form>
       </div>
