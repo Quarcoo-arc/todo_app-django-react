@@ -1,3 +1,7 @@
+html {
+  position: relative;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -76,4 +80,20 @@ code {
 .icon {
   margin-right: 0.5rem;
   cursor: pointer;
+}
+
+footer {
+  position: absolute;
+  width: 100%;
+  font-size: 1.1rem;
+  text-align: center;
+  bottom: 0;
+  color: white;
+  margin-bottom: 1.2rem;
+  font-family: cursive;
+}
+
+footer a {
+  color: #bdbd07;
+  text-decoration: none;
 }
