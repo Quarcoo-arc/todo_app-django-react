@@ -8,6 +8,8 @@ const Form = () => {
 
   const [taskList, setTaskList] = useState([]);
 
+  const [editItemUrl, setEditItemUrl] = useState("");
+
   useEffect(() => {
     const fetchTasks = async () => {
       const tasks = await fetch("http://127.0.0.1:8000/tasks/", {
@@ -27,6 +29,12 @@ const Form = () => {
     event.preventDefault();
     if (!newTask) {
       return alert("Please enter a task!");
+    }
+    if (editItemUrl) {
+      await updateTask();
+      setNewTask("");
+      setEditItemUrl("");
+      return;
     }
     try {
       const recentTask = await fetch("http://127.0.0.1:8000/tasks/", {
@@ -55,6 +63,36 @@ const Form = () => {
     }).then(() => setTaskList(taskList.filter((item) => item.url !== url)));
   };
 
+  const updateTask = async () => {
+    if (!editItemUrl) {
+      return;
+    }
+    try {
+      const updatedTask = await fetch(editItemUrl, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          item: newTask,
+        }),
+      });
+      const data = await updatedTask.json();
+      data &&
+        setTaskList([
+          ...taskList.filter((item) => item.url !== editItemUrl),
+          data,
+        ]);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const editTask = async (item) => {
+    setNewTask(item.item);
+    setEditItemUrl(item.url);
+  };
+
   return (
     <div>
       {taskList.map((item, index) => (
@@ -66,7 +104,7 @@ const Form = () => {
               width="1.5rem"
               className="icon"
               fill="#e1e104"
-              onClick={() => console.log(index)}
+              onClick={editTask.bind(null, item)}
             />
             <DeleteIcon
               width="1.5rem"
