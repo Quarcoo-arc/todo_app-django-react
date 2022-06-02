@@ -47,6 +47,17 @@ code {
   position: relative;
 }
 
+label {
+  margin-left: 0.3rem;
+  margin-right: 0.3rem;
+  width: 78%;
+  display: inline-block;
+}
+
+.strikethrough {
+  text-decoration: line-through;
+}
+
 #newTask {
   border: none;
   width: 80%;

@@ -3,9 +3,18 @@ import { ReactComponent as EditIcon } from "../assets/svgs/EditIcon.svg";
 import { ReactComponent as DeleteIcon } from "../assets/svgs/DeleteIcon.svg";
 
 const TaskItem = ({ item, index, editTask, deleteTask }) => {
+  const toggleStikeThrough = (event) => {
+    event.target.nextSibling.classList.toggle("strikethrough");
+  };
+
   return (
     <div className="task">
-      <input type="checkbox" name={"task" + index} id={"task" + index} />
+      <input
+        type="checkbox"
+        name={"task" + index}
+        id={"task" + index}
+        onChange={toggleStikeThrough}
+      />
       <label htmlFor={"task" + index}>{item.item}</label>
       <div className="icons">
         <EditIcon
