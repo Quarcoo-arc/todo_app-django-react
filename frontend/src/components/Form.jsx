@@ -47,7 +47,7 @@ const Form = () => {
         }),
       });
       const data = await recentTask.json();
-      data && setTaskList((prev) => [...prev, data]);
+      data && setTaskList((prev) => [data, ...prev]);
     } catch (error) {
       console.log(error.message);
     }
@@ -80,8 +80,8 @@ const Form = () => {
       const data = await updatedTask.json();
       data &&
         setTaskList([
-          ...taskList.filter((item) => item.url !== editItemUrl),
           data,
+          ...taskList.filter((item) => item.url !== editItemUrl),
         ]);
     } catch (error) {
       console.log(error.message);
@@ -93,17 +93,12 @@ const Form = () => {
     setEditItemUrl(item.url);
   };
 
+  const toggleStrikeThrough = (event) => {
+    event.target.nextSibling.classList.toggle("strikethrough");
+  };
+
   return (
     <div>
-      {taskList.map((item, index) => (
-        <TaskItem
-          key={index}
-          index={index}
-          item={item}
-          editTask={editTask.bind(null, item)}
-          deleteTask={deleteTask.bind(null, item.url)}
-        />
-      ))}
       <div className="task">
         <form action="" onSubmit={addNewTask}>
           <input
@@ -124,6 +119,16 @@ const Form = () => {
           </button>
         </form>
       </div>
+      {taskList.map((item) => (
+        <TaskItem
+          key={item.url.split("/")[item.url.split("/").length - 2]}
+          index={item.url.split("/")[item.url.split("/").length - 2]}
+          item={item}
+          editTask={editTask.bind(null, item)}
+          deleteTask={deleteTask.bind(null, item.url)}
+          toggleStrikeThrough={toggleStrikeThrough}
+        />
+      ))}
     </div>
   );
 };

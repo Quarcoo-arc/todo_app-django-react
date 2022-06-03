@@ -9,5 +9,5 @@ class TaskViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows tasks to be viewed or edited
     """
-    queryset = Task.objects.all()
+    queryset = Task.objects.all().order_by('-created_at')
     serializer_class = TaskSerializer
