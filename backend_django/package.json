@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "install": "pip install -r requirements.txt",
+    "prebuild": "python manage.py makemigrations",
+    "build": "python manage.py migrate",
+    "postbuild": "python manage.py runserver"
+  }
+}
