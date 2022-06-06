@@ -10,9 +10,14 @@ const Form = () => {
 
   const [editItemUrl, setEditItemUrl] = useState("");
 
+  const url =
+    window.location.hostname === "localhost"
+      ? "http://127.0.0.1:8000/tasks/"
+      : "https://todo-app-react-django-backend.herokuapp.com/tasks/";
+
   useEffect(() => {
     const fetchTasks = async () => {
-      const tasks = await fetch("http://127.0.0.1:8000/tasks/", {
+      const tasks = await fetch(url, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -21,7 +26,7 @@ const Form = () => {
       setTaskList(data);
     };
     fetchTasks();
-  }, []);
+  }, [url]);
 
   const changeTaskText = (event) => setNewTask(event.target.value);
 
@@ -37,7 +42,7 @@ const Form = () => {
       return;
     }
     try {
-      const recentTask = await fetch("http://127.0.0.1:8000/tasks/", {
+      const recentTask = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
