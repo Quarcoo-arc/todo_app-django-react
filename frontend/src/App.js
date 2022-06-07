@@ -4,8 +4,10 @@ import Footer from "./components/Footer";
 function App() {
   return (
     <div className="container">
-      <h1 className="title">{new Date().toDateString()}</h1>
-      <Form />
+      <div className="wrapper">
+        <h1 className="title">{new Date().toDateString()}</h1>
+        <Form />
+      </div>
       <Footer />
     </div>
   );
