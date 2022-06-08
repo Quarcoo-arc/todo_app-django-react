@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'backend',
     'corsheaders',
-    'whitenoise.runserver_nostatic'
+    'whitenoise.runserver_nostatic',
+    'django_filters'
 ]
 
 MIDDLEWARE = [
