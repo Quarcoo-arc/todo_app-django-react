@@ -1,7 +1,9 @@
-from django.shortcuts import render
 from backend.models import Task
 from rest_framework import viewsets
 from backend.serializers import TaskSerializer
+from django.contrib.auth.models import User
+from backend_django.backend.serializers import UserSerializer
+from rest_framework import generics
 
 # Create your views here.
 
@@ -11,3 +13,11 @@ class TaskViewSet(viewsets.ModelViewSet):
     """
     queryset = Task.objects.all().order_by('-created_at')
     serializer_class = TaskSerializer
+
+class UserList(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+class UserDetail(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
