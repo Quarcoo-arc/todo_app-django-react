@@ -143,3 +143,34 @@ form.login {
   cursor: pointer;
   box-shadow: 0.2rem 0.2rem rgb(87, 87, 87);
 }
+
+.user {
+  position: absolute;
+  top: 2rem;
+  right: 3rem;
+  background-color: #4c87a0;
+  color: white;
+  padding: 0.3rem 0.5rem;
+  border-radius: 0.2rem;
+  cursor: pointer;
+}
+
+.userIcon {
+  margin-bottom: -0.1rem;
+}
+
+.dropdown {
+  position: absolute;
+  top: 4rem;
+  right: 3rem;
+  background-color: white;
+  border-bottom: #4c87a0;
+  color: rgb(201, 17, 17);
+  cursor: pointer;
+  padding: 0.3rem 1.2rem;
+  display: none;
+}
+
+.show {
+  display: block;
+}

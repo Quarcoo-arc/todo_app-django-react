@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ReactComponent as PlusIcon } from "../assets/svgs/PlusIcon.svg";
 import { ReactComponent as CheckMarkIcon } from "../assets/svgs/CheckMarkIcon.svg";
 import TaskItem from "./TaskItem";
+import UserContext from "../context/UserContext";
 
 const Form = () => {
+  const { userName } = useContext(UserContext);
+
   const [newTask, setNewTask] = useState("");
 
   const [taskList, setTaskList] = useState([]);
@@ -16,6 +19,10 @@ const Form = () => {
       : "https://todo-app-react-django-backend.herokuapp.com/tasks/";
 
   useEffect(() => {
+    if (!userName) {
+      alert("You're not logged in!");
+      return;
+    }
     const fetchTasks = async () => {
       const tasks = await fetch(url, {
         headers: {
@@ -23,10 +30,12 @@ const Form = () => {
         },
       });
       const data = await tasks.json();
-      setTaskList(data);
+      setTaskList(data.filter((item) => item.user === userName));
     };
     fetchTasks();
-  }, [url]);
+  }, [url, userName]);
+
+  console.log(taskList);
 
   const changeTaskText = (event) => setNewTask(event.target.value);
 
@@ -49,6 +58,7 @@ const Form = () => {
         },
         body: JSON.stringify({
           item: newTask,
+          user: userName,
         }),
       });
       const data = await recentTask.json();
@@ -80,6 +90,7 @@ const Form = () => {
         },
         body: JSON.stringify({
           item: newTask,
+          user: userName,
         }),
       });
       const data = await updatedTask.json();
