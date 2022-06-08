@@ -1,3 +1,4 @@
+from urllib import request
 from backend.models import Task
 from rest_framework import viewsets
 from backend.serializers import TaskSerializer
@@ -11,14 +12,8 @@ class TaskViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows tasks to be viewed or edited
     """
-    queryset = Task.objects.all().order_by('-created_at')
     serializer_class = TaskSerializer
 
-    permission_classes = [permissions.IsAuthenticated]
-
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
-
-class UserViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+    def get_queryset(self):
+        user = self.request.user
+        return Task.objects.filter(user=user).order_by('-created_at')

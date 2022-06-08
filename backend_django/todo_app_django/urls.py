@@ -23,8 +23,6 @@ router.register(r'tasks', views.TaskViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('users/', views.UserList.as_view()),
-    path('users/<int:pk>/', views.UserDetail.as_view()),
     path('', include(router.urls)),
     path('api/', include('rest_framework.urls', namespace='rest_framework'))
 ]
