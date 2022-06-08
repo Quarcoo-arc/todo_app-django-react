@@ -1,17 +1,12 @@
-import Form from "./components/Form";
-import Footer from "./components/Footer";
-import Login from "./components/Login";
-
+import { UserContextProvider } from "./context/UserContext";
+import LandingPage from "./pages/LandingPage";
 function App() {
   return (
-    <div className="container">
-      <div className="wrapper">
-        <h1 className="title">{new Date().toDateString()}</h1>
-        {/* <Form /> */}
-        <Login />
+    <UserContextProvider>
+      <div className="container">
+        <LandingPage />
       </div>
-      <Footer />
-    </div>
+    </UserContextProvider>
   );
 }
 
