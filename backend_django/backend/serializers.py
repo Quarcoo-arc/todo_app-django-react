@@ -3,7 +3,7 @@ from backend.models import Task
 from django.contrib.auth.models import User
 
 class TaskSerializer(serializers.HyperlinkedModelSerializer):
-    user = serializers.ReadOnlyField(source='user.username')
+    user = serializers.ReadOnlyField(source='user.username', querySet=User.objects.get())
     
     class Meta:
         model = Task
