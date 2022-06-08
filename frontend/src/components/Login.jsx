@@ -4,15 +4,18 @@ const Login = () => {
   return (
     <div>
       <h2>Sign-In</h2>
-      <form action="">
+      <form className="login" action="">
         <input
+          className="inputField"
           type="text"
           name="username"
           id="username"
-          placeholder="username"
+          placeholder="Enter a username"
           required
         />
-        <button type="submit">Sign-In</button>
+        <button className="loginBtn" type="submit">
+          Sign-In
+        </button>
       </form>
     </div>
   );
